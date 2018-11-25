@@ -1,0 +1,27 @@
+<h2><%= @project.name %></h2>
+<h3>Repo Submission</h3>
+<p>
+  Hi there! Fill out the form below and we'll create a project board with cards and user stories. Be sure the follow the instructions for it work properly.
+<div class="col-4">
+  <%= form_for [@project, @clone] do |f| %>
+    <%= hidden_field_tag :project_hash_id, @project.hash_id  %>
+    <p>
+    <strong>Student Name(s)</strong>
+      <%= f.text_field :students, class: "block col-12 field"  %>
+      <em>(e.g. Josh, Mike D.)</em>
+    </p>
+
+    <p>
+    <strong>Github Handle of Repo Owner</strong>
+    <%= f.text_field :owner, class: "block col-12 field"  %>
+    <em>(e.g. If the URL is https://github.com/jmejia/test-app, the handle is jmejia)</em>
+    </p>
+
+    <p>
+    <strong>Repo Name</strong>
+    <%= f.text_field :repo_name, class: "block col-12 field"  %>
+    <em>(e.g. If the URL is https://github.com/jmejia/test-app, the repo name is test-app)</em>
+    </p>
+    <%= f.submit "Submit", class: "mt2 btn btn-primary mb1 bg-teal"  %>
+  <% end %>
+</div>

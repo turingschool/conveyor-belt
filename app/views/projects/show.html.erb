@@ -1,0 +1,22 @@
+<h3><%= @project.name %></h3>
+<ul>
+  <li><strong>Link to Form:</strong> <%= link_to new_project_clone_url(project_id: @project.hash_id), new_project_clone_url(project_id: @project.hash_id) %></li>
+  <li><strong>Project Board:</strong> <%= link_to @project.board_url, @project.board_url %></li>
+</ul>
+
+<table>
+  <tr>
+    <th>Students</th>
+    <th>Repo Owner</th>
+    <th>Repo Name</th>
+  </tr>
+  <% @project.clones.each do |clone| %>
+    <tr>
+      <td><%= clone.students %></td>
+      <td><%= clone.owner %></td>
+      <td><%= clone.repo_name %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "Generate Boards", boards_creator_path(project_id: @project.hash_id), method: :post %>

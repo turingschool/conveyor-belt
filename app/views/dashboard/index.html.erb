@@ -1,0 +1,15 @@
+<h3>Existing Project Board Templates</h3>
+<% @facade.projects.each do |project| %>
+  <%= link_to project.name, project_path(id: project.hash_id) %>
+<% end %>
+<hr>
+<h3>New Template</h3>
+<div class="col-4">
+  <%= form_for @facade.project do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "block col-12 field" %>
+    <%= f.label :project_board_template_url %>
+    <%= f.text_field :project_board_base_url, class: "block col-12 field" %>
+    <%= f.submit 'Create', class: "mt2 btn btn-primary mb1 bg-teal" %>
+  <% end %>
+</div>
