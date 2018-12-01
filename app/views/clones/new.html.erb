@@ -13,16 +13,11 @@
     </p>
 
     <p>
-    <strong>Github Handle of Repo Owner</strong>
-    <%= f.text_field :owner, class: "block col-12 field"  %>
-    <em>(e.g. If the URL is https://github.com/jmejia/test-app, the handle is jmejia)</em>
+    <strong>Link to your Github repo</strong>
+    <%= text_field_tag :repo_url, nil, { class: "block col-12 field"}  %>
+    <em>(e.g. https://github.com/jmejia/test-app)</em>
     </p>
 
-    <p>
-    <strong>Repo Name</strong>
-    <%= f.text_field :repo_name, class: "block col-12 field"  %>
-    <em>(e.g. If the URL is https://github.com/jmejia/test-app, the repo name is test-app)</em>
-    </p>
     <%= f.submit "Submit", class: "mt2 btn btn-primary mb1"  %>
   <% end %>
 </div>

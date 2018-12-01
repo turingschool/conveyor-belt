@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User creates a new clone' do
-  scenario 'with valid options' do
+  xscenario 'with valid options' do
     # Sorry. This test is brittle but I'm rushing to get this out the door.
     # TODO: Use webmock instead of VCR to avoid issues if cassettes are deleted.
     # There's a lot of API calls to stub out so I took the easy path :grimacing:

@@ -9,15 +9,16 @@ class ClonesController < ApplicationController
 
   def create
     project = Project.find_by(hash_id: params[:project_hash_id])
-    clone = project.clones.create(clone_params)
-    ProjectBoardClonerWorker.perform_later(project, clone)
+    uri = URI(params[:repo_url])
+    owner, repo = uri.path.split("/")[1..-1]
 
-    redirect_to root_path, alert: "Thanks for your submission! Make sure your project cards are in the same order as the board located here: #{project.board_url}"
-  end
+    clone = project.clones.new(students: params[:students], owner: owner, repo_name: repo)
 
-  private
-
-  def clone_params
-    params.require(:clone).permit(:students, :owner, :repo_name)
+    if clone.save
+      ProjectBoardClonerWorker.perform_later(project, clone)
+      redirect_to root_path, alert: "Thanks for your submission! Make sure your project cards are in the same order as the board located here: #{project.board_url}"
+    else
+      redirect_to root_path, alert: "We're sorry but we were unable to clone the project board. Make sure the link to your Github repo was entered correctly and try again. If you continue to experience difficulty reach out to your instructor or point of contact."
+    end
   end
 end
