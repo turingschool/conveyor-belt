@@ -18,7 +18,8 @@
       <div class="p2 mr4 right">
         <% if current_user %>
           Signed in as <%= current_user.name %> |
-          <%= link_to "Sign out", signout_path %>
+          <%= link_to "Sign out", signout_path %> |
+          <%= link_to "Dashboard", dashboard_path %>
         <% end %>
       </div>
     </nav>
