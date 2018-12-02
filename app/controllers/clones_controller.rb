@@ -12,7 +12,7 @@ class ClonesController < ApplicationController
     uri = URI(params[:repo_url])
     owner, repo = uri.path.split("/")[1..-1]
 
-    clone = project.clones.new(students: params[:students], owner: owner, repo_name: repo)
+    clone = project.clones.new(students: params[:clone][:students], owner: owner, repo_name: repo)
 
     if clone.save
       ProjectBoardClonerWorker.perform_later(project, clone)
