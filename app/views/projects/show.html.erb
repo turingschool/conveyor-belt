@@ -7,14 +7,12 @@
 <table>
   <tr>
     <th>Students</th>
-    <th>Repo Owner</th>
-    <th>Repo Name</th>
+    <th>Repo URL</th>
   </tr>
   <% @project.clones.each do |clone| %>
     <tr>
       <td><%= clone.students %></td>
-      <td><%= clone.owner %></td>
-      <td><%= clone.repo_name %></td>
+      <td><%= link_to clone.url, clone.url %></td>
     </tr>
   <% end %>
 </table>
