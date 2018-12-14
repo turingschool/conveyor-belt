@@ -1,5 +1,5 @@
 class ClonesController < ApplicationController
-  skip_before_action :authenticate!
+  skip_before_action :authenticate!, only: [:new, :create]
 
   def new
     @project = Project.find_by(hash_id: params[:project_id])
@@ -9,10 +9,7 @@ class ClonesController < ApplicationController
 
   def create
     project = Project.find_by(hash_id: params[:project_hash_id])
-    uri = URI(params[:repo_url])
-    owner, repo = uri.path.split("/")[1..-1]
-
-    clone = project.clones.new(students: params[:clone][:students], url: params[:repo_url], owner: owner, repo_name: repo)
+    clone = project.clones.new(clone_params)
 
     if clone.save
       ProjectBoardClonerWorker.perform_later(project, clone)
@@ -20,5 +17,9 @@ class ClonesController < ApplicationController
     else
       redirect_to root_path, alert: "We're sorry but we were unable to clone the project board. Make sure the link to your Github repo was entered correctly and try again. If you continue to experience difficulty reach out to your instructor or point of contact."
     end
+  end
+
+  def clone_params
+    params.require(:clone).permit(:url, :students)
   end
 end

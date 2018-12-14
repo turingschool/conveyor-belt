@@ -8,8 +8,9 @@ class GithubService
     end
   end
 
-  def create_board(owner, repo, body)
-    conn.post("/repos/#{owner}/#{repo}/projects", body)
+  def create_board(owner, repo, project_name)
+    body = { name: project_name }.to_json
+    post_json("/repos/#{owner}/#{repo}/projects", body)
   end
 
   def create_column(project_id, name)
