@@ -8,6 +8,7 @@ class ProjectBoardCloner
   end
 
   def run
+    enable_issues_on_student_repo!
     clone_project_board!
     update_clone!
     create_columns!
@@ -19,6 +20,10 @@ class ProjectBoardCloner
 
   private
   attr_reader :cloned_project_board, :owner, :repo, :project_number
+
+  def enable_issues_on_student_repo!
+    Github::Repo.enable_issues!(owner: clone.owner, repo: clone.repo_name, access_token: project.token)
+  end
 
   def clone_project_board!
     @cloned_project_board ||= client.create_board(clone.owner, clone.repo_name, project.name)
