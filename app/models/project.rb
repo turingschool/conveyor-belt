@@ -7,6 +7,10 @@ class Project < ApplicationRecord
   alias_attribute :board_url, :project_board_base_url
   delegate :token, to: :user
 
+  def to_param
+    hash_id
+  end
+
   def set_hash_id
     hash_id = nil
     loop do

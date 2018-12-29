@@ -27,7 +27,7 @@
     <main class="px4">
 
       <% flash.each do |key, msg| %>
-        <%= content_tag :div, msg, class: "#{key} col col-12 center p1 mt3" %>
+        <%= content_tag :div, raw(msg), class: "#{key} col col-12 center p1 mt3" %>
       <% end %>
       <%= yield %>
     </main>

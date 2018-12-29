@@ -1,21 +1,17 @@
-<h2><%= @project.name %></h2>
-<h3>Repo Submission</h3>
-
-<h4><span class="red">IMPORTANT!</span> (sorry for yelling): Please add <span class="blue"><%= @project.user.nickname %></span> as a collaborator to your repo before filling out the form below or this will not work.</h4>
+<h3>Hello. I'd like to setup a project board just for you.</h3>
 
 <div class="col-4 mt2">
   <%= form_for [@project, @clone] do |f| %>
     <%= hidden_field_tag :project_hash_id, @project.hash_id  %>
     <p>
-    <strong>Student Name(s)</strong>
-      <%= f.text_field :students, class: "block col-12 field"  %>
-      <em>(e.g. Josh, Mike D.)</em>
+      <strong>Who will be working on this project?</strong>
+      <%= text_field_tag :students, "" , class: "block col-12 field"  %>
+      <em>(e.g. Josh Mejia)</em>
     </p>
-
     <p>
-    <strong>Link to your Github repo</strong>
-    <%= f.text_field :url, class: "block col-12 field" %>
-    <em>(e.g. https://github.com/jmejia/test-app)</em>
+      <strong>What's your GitHub handle?</strong>
+      <%= text_field_tag :github_handle, "" , class: "block col-12 field"  %>
+      <em>(e.g. jmejia)</em>
     </p>
 
     <%= f.submit "Submit", class: "mt2 btn btn-primary mb1"  %>

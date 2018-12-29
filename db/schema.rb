@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181211163237) do
+ActiveRecord::Schema.define(version: 20181227184801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20181211163237) do
     t.datetime "updated_at", null: false
     t.string "url"
     t.string "github_project_id"
+    t.text "message"
     t.index ["project_id"], name: "index_clones_on_project_id"
   end
 

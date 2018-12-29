@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "/theres-always-money-in-the-banana-stand", to: "login#show"
 
   resources :projects do
-    resources :clones, only: [:new, :create]
+    resources :clones, only: [:new, :create, :update, :destroy]
   end
 
   require 'sidekiq/web'

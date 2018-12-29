@@ -1,0 +1,3 @@
+class BoardCloningError < StandardError
+end
+

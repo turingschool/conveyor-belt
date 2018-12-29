@@ -8,11 +8,26 @@
   <tr>
     <th>Students</th>
     <th>Repo URL</th>
+    <th>Status</th>
+    <th>Last Updated</th>
+    <th>Actions</th>
   </tr>
   <% @project.clones.each do |clone| %>
     <tr>
       <td><%= clone.students %></td>
       <td><%= link_to clone.url, clone.url %></td>
+      <td><%= clone.message %></td>
+      <td><%= clone.updated_at %></td>
+      <td>
+        <%= link_to "Re-clone",
+                    project_clone_path(clone.project, clone),
+                    method: :patch,
+                    data: { confirm: "Are you sure you want to attempt to reclone to #{clone.students}?"} %> |
+        <%= link_to "Delete",
+                    project_clone_path(clone.project, clone),
+                    method: :delete,
+                    data: {confirm: "Are you sure you want to delete this record? The Student(s) will need to resubmit."} %>
+      </td>
     </tr>
   <% end %>
 </table>
