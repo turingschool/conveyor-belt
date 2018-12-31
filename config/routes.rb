@@ -6,9 +6,13 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index"
   post "/boards_creator", to: "boards_creator#create"
 
-  get "/theres-always-money-in-the-banana-stand", to: "login#show"
+  get "/login", to: "login#show"
 
-  resources :projects do
+  namespace :admin do
+    resources :projects, only: [:show, :create]
+  end
+
+  resources :projects, only: [] do
     resources :clones, only: [:new, :create, :update, :destroy]
   end
 

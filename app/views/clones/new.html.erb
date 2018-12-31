@@ -1,19 +1,18 @@
-<h3>Hello. I'd like to setup a project board just for you.</h3>
 
-<div class="col-4 mt2">
-  <%= form_for [@project, @clone] do |f| %>
-    <%= hidden_field_tag :project_hash_id, @project.hash_id  %>
-    <p>
-      <strong>Who will be working on this project?</strong>
-      <%= text_field_tag :students, "" , class: "block col-12 field"  %>
-      <em>(e.g. Josh Mejia)</em>
-    </p>
-    <p>
-      <strong>What's your GitHub handle?</strong>
-      <%= text_field_tag :github_handle, "" , class: "block col-12 field"  %>
-      <em>(e.g. jmejia)</em>
-    </p>
+<div class="col-5 mt2">
+  <% if current_user %>
+    <h3>Hello. We'll setup a project board just for you.</h3>
+    <%= form_for [@project, @clone] do |f| %>
+      <%= hidden_field_tag :project_hash_id, @project.hash_id  %>
+      <p class="mt2">
+        <strong>Who will be working on this project?</strong>
+        <%= text_field_tag :students, "" , class: "block col-12 field"  %>
+        <em>e.g. <strong>Leslie K.</strong> if solo; <strong>Leslie K. and Duke S.</strong> if a team project.</em>
+      </p>
 
-    <%= f.submit "Submit", class: "mt2 btn btn-primary mb1"  %>
+      <%= f.submit "Submit", class: "mt2 btn btn-primary mb1"  %>
+    <% end %>
+  <% else %>
+    <p>Please <%= link_to "sign in with GitHub", "/auth/github" %> to submit.</p>
   <% end %>
 </div>

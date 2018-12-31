@@ -1,7 +1,7 @@
 class IssueCardCloner
-  def initialize(clone, template_card, cloned_column, client)
+  def initialize(repo, template_card, cloned_column, client)
     @template_card  = template_card
-    @clone = clone
+    @repo      = repo
     @cloned_column  = cloned_column
     @client         = client
     @cloned_issue   = nil
@@ -12,12 +12,12 @@ class IssueCardCloner
     create_card!
   end
 
-  def self.run(clone, template_card, cloned_column, client)
-    new(clone, template_card, cloned_column, client).run
+  def self.run(repo, template_card, cloned_column, client)
+    new(repo, template_card, cloned_column, client).run
   end
 
   private
-  attr_reader :template_card, :client, :clone, :cloned_issue, :cloned_column
+  attr_reader :template_card, :client, :clone, :cloned_issue, :cloned_column, :repo
 
   def create_issue!
     content = {
@@ -25,7 +25,7 @@ class IssueCardCloner
       body:  base_issue[:body],
       labels: base_issue[:labels].map { |i| i[:name] }
     }
-    @cloned_issue = client.create_issue(clone.owner, clone.repo_name, content)
+    @cloned_issue = client.create_issue(repo.full_name, content)
   end
 
   def create_card!

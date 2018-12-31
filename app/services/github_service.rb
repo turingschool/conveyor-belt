@@ -18,8 +18,8 @@ class GithubService
     post_json("/projects/#{project_id}/columns", body)
   end
 
-  def create_issue(owner, repo, options = {})
-    url = "/repos/#{owner}/#{repo}/issues"
+  def create_issue(repo_path, options = {})
+    url = "/repos/#{repo_path}/issues"
     body = {
       title: options[:title],
       body: options[:body],

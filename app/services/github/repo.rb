@@ -46,7 +46,6 @@ module Github
     end
 
     def enable_issues!
-      byebug
       client.edit_repository(repo_path, has_issues: true)
     end
 

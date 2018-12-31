@@ -1,10 +1,12 @@
 class ClonesController < ApplicationController
-  skip_before_action :authenticate!, only: [:new, :create]
+  skip_before_action :authenticate!, only: [:new]
 
   def new
     @project = Project.find_by(hash_id: params[:project_id])
-    @clone = @project.clones.new
     four_oh_four unless @project
+
+    @clone = @project.clones.new
+    session[:previous_page] = new_project_clone_path(@project)
   end
 
   def create
@@ -15,7 +17,7 @@ class ClonesController < ApplicationController
     #  display message for student to check email and accept transfer
     # check if current_user is member of org
     project = Project.find_by(hash_id: params[:project_hash_id])
-    clone = project.clones.new(students: params[:students], owner: params[:github_handle])
+    clone = project.clones.new(students: params[:students], user: current_user)
 
     if clone.save
       ProjectBoardClonerWorker.perform_later(project, clone)
@@ -30,10 +32,11 @@ class ClonesController < ApplicationController
     clone = project.clones.find(params[:id])
     ProjectBoardClonerWorker.perform_now(project, clone)
 
-    redirect_to project, alert: "Recloning complete for #{clone.students}. Wait a minute and refresh the page."
+    redirect_to admin_project_path(project), alert: "Recloning complete for #{clone.students}. Wait a minute and refresh the page."
   end
 
   def destroy
+    # TODO Move this to the admin namespace
     project = current_user.projects.find_by(hash_id: params[:project_id])
     clone = project.clones.find(params[:id])
 
@@ -43,7 +46,7 @@ class ClonesController < ApplicationController
       @message = "Unable to delete clone. Please try again."
     end
 
-    redirect_to project, alert: @message
+    redirect_to admin_project_path(project), alert: @message
   end
 
   def clone_params
