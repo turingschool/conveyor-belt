@@ -1,7 +1,11 @@
 nav {
   color: #FFF;
   background: #1A1F22;
-  height: 65px;
+  height: 60px;
+}
+
+.logo img {
+  width: 50%;
 }
 
 nav > .right > a {
@@ -9,14 +13,8 @@ nav > .right > a {
 }
 
 nav > .right > a.login-btn {
+  margin-top: -4px; // ewww
+  font-size: 80%;
   color: #FFF
-}
-
-.logo {
-  font-size: 120%;
-}
-
-.icon {
-  color: #36BCF0;
 }
 
