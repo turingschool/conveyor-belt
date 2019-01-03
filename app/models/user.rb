@@ -5,7 +5,7 @@ class User < ApplicationRecord
     User.find_or_create_by(uid: auth.uid) do |user|
       is_admin = false
       client = Octokit::Client.new(access_token: auth.credentials.token)
-      approved_orgs = %w(turingschool)
+      approved_orgs = ApprovedOrganizations.all
       found_org = client.orgs.find { |org| org.login.in?(approved_orgs) }
 
       is_admin = true if found_org
