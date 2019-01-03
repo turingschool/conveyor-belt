@@ -10,12 +10,12 @@ The app uses GithHub's API extensively and requires OAuth tokens to make API cal
 
 The following two environment variables can be retrieved by registering an OAuth application here: https://github.com/settings/developers
 
+* When registering an app to run on localhost you should set the `Homepage URL` to `http://localhost:3000` and the `Authorization callback URL` to `http://localhost:3000/auth/github/callback`
 * `GITHUB_KEY` - Use key from above after registering.
 * `GITHUB_SECRET` - Use secret from above after registering.
-* When running on localhost:3000 you should set the `Homepage URL` to `http://localhost:3000` and the `Authorization callback URL` to `http://localhost:3000/auth/github/callback`
 
-Only used for testing:
-`GITHUB_TESTING_USER_TOKEN` - This is a user specific token from GitHub. Tokens can be generated here: https://github.com/settings/tokens
+**Only used for testing:**
+* `GITHUB_TESTING_USER_TOKEN` - This is a user specific token from GitHub. Tokens can be generated here: https://github.com/settings/tokens
 
 ### Starting Your Server
 
