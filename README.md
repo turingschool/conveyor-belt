@@ -21,10 +21,12 @@ The following two environment variables can be retrieved by registering an OAuth
 
 Run through the standard Rails commands:
 
-`$ bundle`
-`$ rails db:{create,migrate}`
-`$ rails s`
+* `$ bundle`
+* `$ rails db:{create,migrate}`
+* `$ rails s`
 
 ## Testing
 
 Test suite is written using RSpec. API calls are stubbed using VCR. **Please do not delete cassettes from git.** This will make it more difficult for others looking to contribute to run the test suite. There is a `filter_sensitive_data` option used in VCR to filter out tokens and keys. Be sure to update the VCR config block if you add keys or tokens you don't want pushed up to GitHub.
+
+`$ bundle exec rspec`
