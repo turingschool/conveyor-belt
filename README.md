@@ -10,8 +10,8 @@ The app uses GithHub's API extensively and requires OAuth tokens to make API cal
 
 The following two environment variables can be retrieved by registering an OAuth application here: https://github.com/settings/developers
 
-* `GITHUB_KEY` - Can be retrieved from registering an OAuth application on Github. The app running on Heroku is already setup with these but the values there should not be used on your local machine.
-* `GITHUB_SECRET` - Can be retrieved from registering an OAuth application on Github. The app running on Heroku is already setup with these but the values there should not be used on your local machine. See above link.
+* `GITHUB_KEY` - Use key from above after registering.
+* `GITHUB_SECRET` - Use secret from above after registering.
 * When running on localhost:3000 you should set the `Homepage URL` to `http://localhost:3000` and the `Authorization callback URL` to `http://localhost:3000/auth/github/callback`
 
 Only used for testing:
