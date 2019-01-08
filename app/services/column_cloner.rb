@@ -21,7 +21,7 @@ class ColumnCloner
   attr_reader :column_template, :cloned_column, :target_repo, :client, :project_id
 
   def clone_column!
-    puts @cloned_column ||= client.create_column(project_id, column_template[:name])
+    @cloned_column ||= client.create_column(project_id, column_template[:name])
   end
 
   def clone_cards!
