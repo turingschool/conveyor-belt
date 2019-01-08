@@ -15,6 +15,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GITHUB_KEY>') { ENV['GITHUB_KEY'] }
   config.filter_sensitive_data('<GITHUB_SECRET>') { ENV['GITHUB_SECRET'] }
   config.filter_sensitive_data('<GITHUB_TESTING_USER_TOKEN>') { ENV['GITHUB_TESTING_USER_TOKEN'] }
+  config.filter_sensitive_data('<GITHUB_TESTING_STUDENT_TOKEN>') { ENV['GITHUB_TESTING_STUDENT_TOKEN'] }
 end
 
 def stub_omniauth
