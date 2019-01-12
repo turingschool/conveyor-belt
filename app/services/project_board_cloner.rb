@@ -91,7 +91,7 @@ class ProjectBoardCloner
 
   def update_clone!
     @message = "Saving GitHub project id in the database."
-    clone.update!(github_project_id: cloned_project_board[:id], url: forked_repo.html_url)
+    clone.update!(github_project_id: cloned_project_board[:id], url: cloned_project_board[:html_url])
   end
 
   def create_columns!
