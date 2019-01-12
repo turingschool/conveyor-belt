@@ -8,6 +8,11 @@ class DashboardCreatorJob < ApplicationJob
 
     column = client.create_project_column(github_project.id, "Icetown")
 
-    project.update(dashboard_url: github_project.html_url, github_column: column.id)
+    puts "================================="
+    puts column.id
+    puts github_project.html_url
+    puts "================================="
+
+    project.update!(dashboard_url: github_project.html_url, github_column: column.id)
   end
 end
