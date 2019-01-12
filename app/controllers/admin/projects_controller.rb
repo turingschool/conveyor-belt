@@ -9,6 +9,7 @@ module Admin
       @project = current_user.projects.new(project_params)
 
       if @project.save
+        DashboardCreatorJob.perform_later(@project)
         redirect_to admin_project_path(id: @project.hash_id)
       else
         redirect_to dashboard_path

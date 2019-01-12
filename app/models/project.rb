@@ -19,4 +19,10 @@ class Project < ApplicationRecord
     end
     self.hash_id = hash_id
   end
+
+  def repo_path
+    url_segments = URI(project_board_base_url).path.split("/")
+
+    [url_segments[1], url_segments[2]].join("/")
+  end
 end

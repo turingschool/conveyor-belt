@@ -7,9 +7,12 @@
       <p class="mt2">
         <strong>Who will be working on this project?</strong>
         <%= text_field_tag :students, "" , class: "block col-12 field"  %>
-        <em>e.g. <strong>Leslie K.</strong> if solo; <strong>Leslie K. and Duke S.</strong> if a team project.</em>
+        <em>e.g. <strong>Leslie Knope</strong> if solo; <strong>Leslie Knope and Duke Silver.</strong> if a team project.</em>
       </p>
-
+      <p class="mt2">
+        <strong>We'll send you an email when everything is finished. Where would you like us to send to?</strong>
+        <%= text_field_tag :email, "" , class: "block col-12 field"  %>
+      </p>
       <%= f.submit "Submit", class: "mt2 btn btn-primary mb1"  %>
     <% end %>
   <% else %>

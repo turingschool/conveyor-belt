@@ -10,17 +10,11 @@ class ClonesController < ApplicationController
   end
 
   def create
-    #  create clone in DB
-    #  fork repo to turingschool
-    #  clone project board to forked repo
-    #  transfer ownership to student
-    #  display message for student to check email and accept transfer
-    # check if current_user is member of org
     project = Project.find_by(hash_id: params[:project_hash_id])
     clone = project.clones.new(students: params[:students], user: current_user)
 
     if clone.save
-      ProjectBoardClonerWorker.perform_later(project, clone)
+      ProjectBoardClonerWorker.perform_later(project, clone, params[:email])
       redirect_to root_path, alert: "Thanks for your submission! You should see a board <a href='#{clone.url}/projects'>here</a> shortly. If you don't, reach out to your staff point person and let them know."
     else
       redirect_to root_path, alert: "We're sorry but we were unable to clone the project board. Make sure the link to your Github repo was entered correctly and try again. If you continue to experience difficulty reach out to your instructor or point of contact."

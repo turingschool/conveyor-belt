@@ -1,9 +1,10 @@
 class ProjectBoardCloner
   attr_reader :project, :clone, :message
 
-  def initialize(project, clone)
+  def initialize(project, clone, email)
     @project              = project
     @clone                = clone
+    @email                = email
     @staff_client         = Octokit::Client.new(access_token: project.user.token)
     @student_client       = Octokit::Client.new(access_token: clone.user.token)
     @cloned_project_board = nil
@@ -19,20 +20,23 @@ class ProjectBoardCloner
       clone_project_board!
       update_clone!
       create_columns!
-    rescue => e # rescue every failure and write the message
-      @message = [@message, e.message].uniq.join(", ")
+      add_to_dashboard_project!
+      email_student!
+      write_message!
+    rescue => e
+      write_message!
+      raise e
     end
 
-    write_message!
     return self
   end
 
-  def self.run(project, clone)
-    new(project, clone).run
+  def self.run(project, clone, email)
+    new(project, clone, email).run
   end
 
   private
-  attr_reader :cloned_project_board, :owner, :repo,
+  attr_reader :cloned_project_board, :owner, :repo, :email,
     :project_number, :forked_repo, :staff_client, :student_client
 
   def target_github_repo
@@ -40,16 +44,17 @@ class ProjectBoardCloner
   end
 
   def fork_repo!
-    url_segments = URI(project.project_board_base_url).path.split("/")
-    source_repo_path = [url_segments[1], url_segments[2]].join("/")
-    @forked_repo = student_client.fork(source_repo_path)
+    @message = "Forking repo to student account."
+    @forked_repo = student_client.fork(project.repo_path)
   end
 
   def invite_staff_member_to_repo!
+    @message = "Inviting staff member to student repo."
     student_client.invite_user_to_repo(forked_repo.full_name, project.user.nickname)
   end
 
   def accept_repo_invitation!
+    @message = "Accepting staff invitation."
     page, per_page = 1, 100
     no_more_invitations, found_invitation = false, false
 
@@ -75,21 +80,34 @@ class ProjectBoardCloner
   end
 
   def clone_project_board!
+    @message = "Cloning project board."
     @cloned_project_board ||= client.create_board(forked_repo.owner.login, forked_repo.name, project.name)
   end
 
   def enable_issues!
+    @message = "Enabling issues on student repo."
     Github::Repo.enable_issues!(owner: forked_repo.owner.login, repo: forked_repo.name, access_token: clone.user.token)
   end
 
   def update_clone!
-    clone.update!(github_project_id: cloned_project_board[:id])
+    @message = "Saving GitHub project id in the database."
+    clone.update!(github_project_id: cloned_project_board[:id], url: forked_repo.html_url)
   end
 
   def create_columns!
-    column_templates.each do |column_template|
+    column_templates.each.with_index(1) do |column_template, index|
+      @message = "Creating column #{index}."
       ColumnCloner.run(column_template, forked_repo, clone.github_project_id, client)
     end
+  end
+
+  def add_to_dashboard_project!
+    @message = "Adding reference to dashboard project."
+    staff_client.create_project_card(project.github_column, note: cloned_project_board[:html_url])
+  end
+
+  def email_student!
+    CloneMailer.with(email: email, clone: clone).send_notification.deliver_now
   end
 
   def write_message!

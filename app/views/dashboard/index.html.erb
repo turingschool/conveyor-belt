@@ -2,9 +2,11 @@
 <% if current_user.admin? %>
   <% if @facade.projects.present? %>
     <h3>Existing Project Board Templates</h3>
+    <ol>
     <% @facade.projects.each do |project| %>
-      <%= link_to project.name, admin_project_path(project) %>
+      <li><%= link_to project.name, admin_project_path(project) %></li>
     <% end %>
+    </ol>
   <% end %>
   <hr />
   <h3>New Project</h3>
