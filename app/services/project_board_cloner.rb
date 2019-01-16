@@ -75,7 +75,7 @@ class ProjectBoardCloner
     if found_invitation
       staff_client.accept_repo_invitation(found_invitation.id)
     else
-      raise Octokit::NotFound
+      @message = "Invitation not found. Have the student delete their repo and try again."
     end
   end
 
