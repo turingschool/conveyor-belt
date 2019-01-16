@@ -15,7 +15,7 @@ class ClonesController < ApplicationController
 
     if clone.save
       ProjectBoardClonerWorker.perform_later(project, clone, params[:email])
-      redirect_to root_path, alert: "Thanks for your submission! You should see a board <a href='#{clone.url}/projects'>here</a> shortly. If you don't, reach out to your staff point person and let them know."
+      redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
     else
       redirect_to root_path, alert: "We're sorry but we were unable to clone the project board. Make sure the link to your Github repo was entered correctly and try again. If you continue to experience difficulty reach out to your instructor or point of contact."
     end
