@@ -19,10 +19,6 @@
       <td><%= clone.message %></td>
       <td><%= clone.updated_at %></td>
       <td>
-        <%= link_to "Re-clone",
-                    project_clone_path(clone.project, clone),
-                    method: :patch,
-                    data: { confirm: "Are you sure you want to attempt to reclone to #{clone.students}?"} %> |
         <%= link_to "Delete",
                     project_clone_path(clone.project, clone),
                     method: :delete,
