@@ -81,29 +81,29 @@ class ProjectBoardCloner
 
   def clone_project_board!
     @message = "Cloning project board."
-    @cloned_project_board ||= client.create_board(forked_repo.owner.login, forked_repo.name, project.name)
+    @cloned_project_board ||= student_client.create_project(repo_path, project.name)
   end
 
   def enable_issues!
     @message = "Enabling issues on student repo."
-    Github::Repo.enable_issues!(owner: forked_repo.owner.login, repo: forked_repo.name, access_token: clone.user.token)
+    student_client.edit_repository(repo_path, has_issues: true)
   end
 
   def update_clone!
     @message = "Saving GitHub project id in the database."
-    clone.update!(github_project_id: cloned_project_board[:id], url: cloned_project_board[:html_url])
+    clone.update!(github_project_id: cloned_project_board.id, url: cloned_project_board.html_url)
   end
 
   def create_columns!
     column_templates.each.with_index(1) do |column_template, index|
       @message = "Creating column #{index}."
-      ColumnCloner.run(column_template, forked_repo, clone.github_project_id, client)
+      ColumnCloner.run!(column_template, forked_repo, clone.github_project_id, staff_client)
     end
   end
 
   def add_to_dashboard_project!
     @message = "Adding reference to dashboard project."
-    staff_client.create_project_card(project.github_column, note: cloned_project_board[:html_url])
+    staff_client.create_project_card(project.github_column, note: cloned_project_board.html_url)
   end
 
   def email_student!
@@ -114,22 +114,22 @@ class ProjectBoardCloner
     clone.update(message: message)
   end
 
-  def client
-    @client ||= GithubService.new(token: project.user.token)
-  end
-
   def base_project
-    github_projects.find { |p| p[:number] == project_number.to_i }
+    github_projects.find { |p| p.number == project_number.to_i }
   end
 
   def github_projects
     uri = URI(project.project_board_base_url)
     @owner, @repo, @_projects_segment, @project_number = uri.path.split("/")[1..-1]
-    @github_projects ||= client.projects(owner, repo)
+    @github_projects ||= staff_client.projects([owner, repo].join("/"))
   end
 
   def column_templates
-    client.columns(base_project[:id])
+    staff_client.project_columns(base_project.id)
+  end
+
+  def repo_path
+    "#{forked_repo.owner.login}/#{forked_repo.name}"
   end
 end
 
