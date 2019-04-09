@@ -39,5 +39,5 @@ class ColumnCloner
     puts "Retrieving card for column #{column_template[:id]}"
     @template_cards ||= client.column_cards(column_template[:id]).reverse
   end
-
 end
+

@@ -13,6 +13,7 @@ class ProjectBoardCloner
 
   def run
     begin
+      turn_on_auto_paginate!
       fork_repo!
       invite_staff_member_to_repo!
       accept_repo_invitation!
@@ -130,6 +131,11 @@ class ProjectBoardCloner
 
   def repo_path
     "#{forked_repo.owner.login}/#{forked_repo.name}"
+  end
+
+  def turn_on_auto_paginate!
+    staff_client.auto_paginate = true
+    student_client.auto_paginate = true
   end
 end
 
