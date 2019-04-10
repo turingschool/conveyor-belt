@@ -1,9 +1,9 @@
 #!/bin/bash
 
 set -eu
+echo "hello"
+# bundle install
 
-bundle install
+# npm install
 
-npm install
-
-bundle exec rake db:reset
+# bundle exec rake db:reset
