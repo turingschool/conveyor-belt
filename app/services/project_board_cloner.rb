@@ -40,10 +40,6 @@ class ProjectBoardCloner
   attr_reader :cloned_project_board, :owner, :repo, :email,
     :project_number, :forked_repo, :staff_client, :student_client
 
-  def target_github_repo
-    @target_github_repo ||= Github::Repo.new(owner: clone.owner, repo: clone.repo_name, access_token: project.token)
-  end
-
   def fork_repo!
     @message = "Forking repo to student account."
     @forked_repo = student_client.fork(project.repo_path)

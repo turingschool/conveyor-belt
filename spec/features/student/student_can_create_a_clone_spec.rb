@@ -1,21 +1,17 @@
 require 'rails_helper'
 
 feature 'User creates a new clone' do
-  xscenario 'with valid options' do
-    # Sorry. This test is brittle but I'm rushing to get this out the door.
-    # TODO: Use webmock instead of VCR to avoid issues if cassettes are deleted.
-    # There's a lot of API calls to stub out so I took the easy path :grimacing:
-    user = create(:user, nickname: "jmejia")
+  scenario 'with valid options' do
+    student = create(:student)
+    project = create(:project, hash_id: "abc123", user: student, project_board_base_url: "https://github.com/turingschool/newb-tube/projects/1")
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(student)
 
-    project = create(:project, hash_id: "abc123", user: user, project_board_base_url: "https://github.com/turingschool/newb-tube/projects/1")
+    expect(ProjectBoardClonerWorker).to receive(:perform_later).with array_including(project, "bambi@example.com")
 
     visit new_project_clone_path(project_id: project.hash_id)
 
-    expect(page).to have_content("Please add jmejia as a collaborator to your repo")
-
-    fill_in :clone_students, with: "Flower, Thumper"
-    fill_in :clone_owner, with: "jmejia"
-    fill_in :clone_repo_name, with: "experimenting-with-projects"
+    fill_in :students, with: "Flower, Thumper, Bambi"
+    fill_in :email, with: "bambi@example.com"
 
     expect {
       click_on "Submit"
