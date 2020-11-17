@@ -50,20 +50,22 @@ class ProjectBoardCloner
 
   def invite_staff_member_to_repo!
     @message = "Inviting staff member to student repo."
-    student_client.invite_user_to_repo(forked_repo.full_name, project.user.nickname)
+    student_client.invite_user_to_repository(forked_repo.full_name, project.user.nickname)
   end
 
   def accept_repo_invitation!
-    @message = "Accepting staff invitation."
+    @message = "Accepting staff invitations."
     page, per_page = 1, 100
     no_more_invitations, found_invitation = false, false
+    invites = []
 
-    until no_more_invitations || found_invitation
+    until no_more_invitations # || found_invitation
       invitations = staff_client.user_repository_invitations(page: page, per_page: per_page)
 
-      found_invitation = invitations.find do |invite|
+      invites << invitations.find_all do |invite|
         invite.repository.full_name == forked_repo.full_name
       end
+      invites.flatten!
 
       if invitations.count < per_page
         no_more_invitations = true
@@ -72,11 +74,16 @@ class ProjectBoardCloner
       page += 1
     end
 
-    if found_invitation
-      staff_client.accept_repo_invitation(found_invitation.id)
-    else
-      raise Octokit::NotFound
+    invites.flatten!
+    invites.each do |invite|
+      staff.client.accept_repository_invitation(invite.id)
     end
+
+    # if found_invitation
+    #   staff_client.accept_repo_invitation(found_invitation.id)
+    # else
+    #   raise Octokit::NotFound
+    # end
   end
 
   def clone_project_board!
@@ -103,7 +110,7 @@ class ProjectBoardCloner
 
   def add_to_dashboard_project!
     @message = "Adding reference to dashboard project."
-    staff_client.create_project_card(project.github_column, note: cloned_project_board[:html_url])
+    staff_client.create_project_card(project.github_column, note: "cloned: #{cloned_project_board[:html_url]}")
   end
 
   def email_student!

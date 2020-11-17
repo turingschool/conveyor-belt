@@ -3,7 +3,6 @@ FactoryBot.define do
     name { "Conveyor Belt" }
     user { instructor }
     hash_id { "abc123" }
-    project_board_base_url { "https://github.com/turingschool-examples/brownfield-of-dreams/projects/1" }
+    project_board_base_url { "https://github.com/turingschool-examples/watch-and-learn/projects/1" }
   end
 end
-

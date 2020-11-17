@@ -21,3 +21,9 @@
 # Ignore application configuration
 /config/application.yml
 /coverage/*
+
+
+.idea
+.ruby-version
+.generators
+config/application.yml
