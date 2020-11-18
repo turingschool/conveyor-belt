@@ -266,7 +266,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   shoulda-matchers
-  sidekiq (~> 5.2.3)
+  sidekiq
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
