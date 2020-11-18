@@ -13,6 +13,7 @@ class ProjectBoardCloner
 
   def run
     begin
+      write_message("getting started!")
       turn_on_auto_paginate!
       fork_repo!
       invite_staff_member_to_repo!
@@ -23,9 +24,9 @@ class ProjectBoardCloner
       create_columns!
       add_to_dashboard_project!
       email_student!
-      write_message!
+      write_message("all done!")
     rescue => e
-      write_message!
+      write_message(e.message)
       raise e
     end
 
@@ -116,8 +117,8 @@ class ProjectBoardCloner
   end
 
   def write_message(message)
-    clone.update(message: message)
-    clone.save!
+    @clone.update(message: message)
+    @clone.save!
   end
 
   def base_project
