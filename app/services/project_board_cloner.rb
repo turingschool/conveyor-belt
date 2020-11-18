@@ -76,7 +76,7 @@ class ProjectBoardCloner
 
     invites.flatten!
     invites.each do |invite|
-      staff.client.accept_repository_invitation(invite.id)
+      staff_client.accept_repository_invitation(invite.id)
     end
 
     # if found_invitation

@@ -7,7 +7,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 
 SimpleCov.start "rails"
-SimpleCov.add_filter %w[spec lib config app/channels app/helpers]
+SimpleCov.add_filter %w[spec lib config app/channels app/helpers app/workers]
 
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/cassettes'

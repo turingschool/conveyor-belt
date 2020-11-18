@@ -1,7 +1,7 @@
 class ApprovedOrganizations
   def self.all
     [
-      "turingschool"
+      'turingschool'
     ]
   end
 end
