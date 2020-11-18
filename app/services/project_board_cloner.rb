@@ -117,6 +117,7 @@ class ProjectBoardCloner
 
   def write_message(message)
     clone.update(message: message)
+    clone.save!
   end
 
   def base_project
@@ -138,7 +139,9 @@ class ProjectBoardCloner
   end
 
   def turn_on_auto_paginate!
+    write_message("enabling auto_paginate for staff")
     staff_client.auto_paginate = true
+    write_message("enabling auto_paginate for students")
     student_client.auto_paginate = true
   end
 end
