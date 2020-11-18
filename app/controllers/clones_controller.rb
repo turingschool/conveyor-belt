@@ -14,6 +14,7 @@ class ClonesController < ApplicationController
     if project
       clone = project.clones.new(students: params[:students], user: current_user, url: '')
       if clone.save
+        clone.update(message: 'sending to sidekiq')
         ProjectBoardClonerWorker.perform_later(project, clone, params[:email])
         redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
       else
