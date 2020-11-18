@@ -17,7 +17,7 @@ FactoryBot.define do
     admin { false }
   end
 
-  factory :instructor, parent: :user do
+  factory :instructor, aliases: [:staff], parent: :user do
     name { 'Ian Douglas' }
     uid { '168030' }
     token { ENV['GITHUB_TESTING_USER_TOKEN'] }

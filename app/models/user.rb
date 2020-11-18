@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :projects, dependent: :destroy
+  has_many :clones, dependent: :destroy
 
   def self.from_omniauth(auth)
     User.find_or_create_by(uid: auth.uid) do |user|

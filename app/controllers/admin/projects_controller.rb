@@ -1,7 +1,7 @@
 module Admin
   class ProjectsController < AdminBaseController
     def show
-      @project = current_user.projects.find_by(hash_id: params[:id])
+      @project = project
       four_oh_four unless @project
     end
 
@@ -19,6 +19,10 @@ module Admin
     private
     def project_params
       params.require(:project).permit(:name, :project_board_base_url)
+    end
+
+    def project
+      @project ||= current_user.projects.find_by(hash_id: params[:id])
     end
   end
 end

@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :postmark
   config.action_mailer.postmark_settings = { api_token: Rails.application.secrets.postmark_api_token }
 

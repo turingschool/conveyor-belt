@@ -25,12 +25,9 @@ feature "A student logs in with GitHub" do
 
   scenario 'login works but throws 404 if trying to go to admin areas' do
     user = create(:user, nickname: 'jmejia')
+    student = create(:student, nickname: 'student')
     project = create(:project, hash_id: 'abc123', user: user, project_board_base_url: 'https://github.com/turingschool/newb-tube/projects/1')
-
-    stub_omniauth
-    allow(ApprovedOrganizations).to receive(:all).and_return(%w(not-a-real-organization))
-    visit root_path
-    click_link "Sign in with GitHub"
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(student)
 
     expect{visit admin_project_path(project)}.to raise_error ActionController::RoutingError
   end

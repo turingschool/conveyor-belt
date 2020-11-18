@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy'
 
   get "/dashboard", to: "dashboard#index"
-  post "/boards_creator", to: "boards_creator#create"
 
   get "/login", to: "login#show"
 

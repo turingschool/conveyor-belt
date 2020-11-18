@@ -2,8 +2,6 @@ class Clone < ApplicationRecord
   belongs_to :project
   belongs_to :user
 
-  # validates :owner,     presence: true
-  # validates :repo_name, presence: true
   validates :students,  presence: true
   # validates :url,       presence: true
 

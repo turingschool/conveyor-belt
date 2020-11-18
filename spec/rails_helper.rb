@@ -13,7 +13,7 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/cassettes'
   config.hook_into :webmock
   config.configure_rspec_metadata!
-  config.allow_http_connections_when_no_cassette = true
+  # config.allow_http_connections_when_no_cassette = true
   config.default_cassette_options = { re_record_interval: 1.year, record: :new_episodes }
   config.filter_sensitive_data('<GITHUB_KEY>') { ENV['GITHUB_KEY'] }
   config.filter_sensitive_data('<GITHUB_SECRET>') { ENV['GITHUB_SECRET'] }

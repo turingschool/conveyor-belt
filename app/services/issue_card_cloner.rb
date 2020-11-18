@@ -1,7 +1,7 @@
 class IssueCardCloner
   def initialize(repo, template_card, cloned_column, client)
     @template_card  = template_card
-    @repo      = repo
+    @repo           = repo
     @cloned_column  = cloned_column
     @client         = client
     @cloned_issue   = nil
@@ -17,22 +17,35 @@ class IssueCardCloner
   end
 
   private
-  attr_reader :template_card, :client, :clone, :cloned_issue, :cloned_column, :repo
+  attr_reader :template_card, :client, :clone, :cloned_issue, :cloned_column, :repo, :number
 
   def create_issue!
-    content = {
-      title: base_issue[:title],
-      body:  base_issue[:body],
-      labels: base_issue[:labels].map { |i| i[:name] }
+    options = {
+      labels: base_issue.labels.map { |i| i[:name] }
     }
-    @cloned_issue = client.create_issue(repo.full_name, content)
+
+    @cloned_issue = client.create_issue(repo.full_name, base_issue.title, base_issue.body, options)
   end
 
   def create_card!
-    client.create_issue_card(cloned_column[:id], cloned_issue[:id])
+    options = {
+      content_type: "Issue",
+      content_id: cloned_issue.id
+    }
+
+    client.create_project_card(cloned_column.id, options)
   end
 
   def base_issue
-    @base_issue ||= client.issue(template_card[:content_url])
+    @base_issue = client.issue(repo_path, number)
+  end
+
+  def repo_path
+    @repo_path ||= build_repo_path
+  end
+
+  def build_repo_path
+    _repos, owner, repo_name, _issues, @number =  URI(template_card.content_url).path.split("/")[1..-1]
+    @repo_path = "#{owner}/#{repo_name}"
   end
 end
