@@ -1,14 +1,18 @@
 <h2>Dashboard</h2>
 <% if current_user.admin? %>
   <% if @facade.projects.present? %>
+    <div id="existing-projects">
     <h3>Existing Project Board Templates</h3>
     <ol>
     <% @facade.projects.each do |project| %>
       <li><%= link_to project.name, admin_project_path(project) %></li>
     <% end %>
     </ol>
+    </div>
   <% end %>
   <hr />
+
+  <div id="new-project">
   <h3>New Project</h3>
   <div class="col-4">
     <%= form_for [:admin, @facade.project] do |f| %>
@@ -28,6 +32,7 @@
       </p>
       <%= f.submit 'Create', class: "mt2 btn btn-primary mb1" %>
     <% end %>
+  </div>
   </div>
 <% else %>
   <p>Hi <%= current_user.nickname %>!</p>

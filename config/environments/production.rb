@@ -1,16 +1,7 @@
 Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'enroll.turing.io' }
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.sendgrid.net',
-    port:                 587,
-    domain:               'enroll.turing.io',
-    user_name:            ENV["SENDGRID_USERNAME"],
-    password:             ENV["SENDGRID_PASSWORD"],
-    authentication:       'plain',
-    enable_starttls_auto: true
-  }
+  config.action_mailer.delivery_method = :postmark
+  config.action_mailer.postmark_settings = { api_token: Rails.application.secrets.postmark_api_token }
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -58,7 +49,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.

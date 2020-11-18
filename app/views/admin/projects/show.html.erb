@@ -1,6 +1,6 @@
 <h3><%= @project.name %></h3>
 <ul>
-  <li><strong>Link to send students:</strong> <%= link_to new_project_clone_url(project_id: @project.hash_id), new_project_clone_url(project_id: @project.hash_id) %></li>
+  <li><strong>Link to send students:</strong> <%= link_to new_project_clone_path(project_id: @project.hash_id), new_project_clone_path(project_id: @project.hash_id) %></li>
   <li><strong>Project Board:</strong> <%= link_to @project.board_url, @project.board_url %></li>
 </ul>
 

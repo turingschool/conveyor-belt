@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/user/orgs
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 4.19.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - token <GITHUB_TESTING_USER_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Wed, 18 Nov 2020 03:26:54 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      Etag:
+      - W/"5c71cac272bc49beb12bd43d45bce3588148b9e71fbe1496da75216e94d984ec"
+      X-Oauth-Scopes:
+      - admin:enterprise, admin:gpg_key, admin:org, admin:org_hook, admin:public_key,
+        admin:repo_hook, delete:packages, delete_repo, gist, notifications, repo,
+        user, workflow, write:discussion, write:packages
+      X-Accepted-Oauth-Scopes:
+      - admin:org, read:org, repo, user, write:org
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4999'
+      X-Ratelimit-Reset:
+      - '1605673614'
+      X-Ratelimit-Used:
+      - '1'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+        X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      X-Github-Request-Id:
+      - DCF1:263A:37A2128:5F0457C:5FB4947D
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"login":"turingschool","id":7934292,"node_id":"MDEyOk9yZ2FuaXphdGlvbjc5MzQyOTI=","url":"https://api.github.com/orgs/turingschool","repos_url":"https://api.github.com/orgs/turingschool/repos","events_url":"https://api.github.com/orgs/turingschool/events","hooks_url":"https://api.github.com/orgs/turingschool/hooks","issues_url":"https://api.github.com/orgs/turingschool/issues","members_url":"https://api.github.com/orgs/turingschool/members{/member}","public_members_url":"https://api.github.com/orgs/turingschool/public_members{/member}","avatar_url":"https://avatars0.githubusercontent.com/u/7934292?v=4","description":""},{"login":"turingschool-examples","id":8518346,"node_id":"MDEyOk9yZ2FuaXphdGlvbjg1MTgzNDY=","url":"https://api.github.com/orgs/turingschool-examples","repos_url":"https://api.github.com/orgs/turingschool-examples/repos","events_url":"https://api.github.com/orgs/turingschool-examples/events","hooks_url":"https://api.github.com/orgs/turingschool-examples/hooks","issues_url":"https://api.github.com/orgs/turingschool-examples/issues","members_url":"https://api.github.com/orgs/turingschool-examples/members{/member}","public_members_url":"https://api.github.com/orgs/turingschool-examples/public_members{/member}","avatar_url":"https://avatars3.githubusercontent.com/u/8518346?v=4","description":""},{"login":"turingschool-projects","id":10454571,"node_id":"MDEyOk9yZ2FuaXphdGlvbjEwNDU0NTcx","url":"https://api.github.com/orgs/turingschool-projects","repos_url":"https://api.github.com/orgs/turingschool-projects/repos","events_url":"https://api.github.com/orgs/turingschool-projects/events","hooks_url":"https://api.github.com/orgs/turingschool-projects/hooks","issues_url":"https://api.github.com/orgs/turingschool-projects/issues","members_url":"https://api.github.com/orgs/turingschool-projects/members{/member}","public_members_url":"https://api.github.com/orgs/turingschool-projects/public_members{/member}","avatar_url":"https://avatars3.githubusercontent.com/u/10454571?v=4","description":"Student
+        Projects"},{"login":"CoderDojoDenver","id":17015496,"node_id":"MDEyOk9yZ2FuaXphdGlvbjE3MDE1NDk2","url":"https://api.github.com/orgs/CoderDojoDenver","repos_url":"https://api.github.com/orgs/CoderDojoDenver/repos","events_url":"https://api.github.com/orgs/CoderDojoDenver/events","hooks_url":"https://api.github.com/orgs/CoderDojoDenver/hooks","issues_url":"https://api.github.com/orgs/CoderDojoDenver/issues","members_url":"https://api.github.com/orgs/CoderDojoDenver/members{/member}","public_members_url":"https://api.github.com/orgs/CoderDojoDenver/public_members{/member}","avatar_url":"https://avatars0.githubusercontent.com/u/17015496?v=4","description":"Denver,
+        CO chapter of CoderDojo, a volunteer-run organization that teaches kids to
+        code."},{"login":"Practice-Hacker","id":71088375,"node_id":"MDEyOk9yZ2FuaXphdGlvbjcxMDg4Mzc1","url":"https://api.github.com/orgs/Practice-Hacker","repos_url":"https://api.github.com/orgs/Practice-Hacker/repos","events_url":"https://api.github.com/orgs/Practice-Hacker/events","hooks_url":"https://api.github.com/orgs/Practice-Hacker/hooks","issues_url":"https://api.github.com/orgs/Practice-Hacker/issues","members_url":"https://api.github.com/orgs/Practice-Hacker/members{/member}","public_members_url":"https://api.github.com/orgs/Practice-Hacker/public_members{/member}","avatar_url":"https://avatars3.githubusercontent.com/u/71088375?v=4","description":""},{"login":"My-Solar-Garden","id":73499254,"node_id":"MDEyOk9yZ2FuaXphdGlvbjczNDk5MjU0","url":"https://api.github.com/orgs/My-Solar-Garden","repos_url":"https://api.github.com/orgs/My-Solar-Garden/repos","events_url":"https://api.github.com/orgs/My-Solar-Garden/events","hooks_url":"https://api.github.com/orgs/My-Solar-Garden/hooks","issues_url":"https://api.github.com/orgs/My-Solar-Garden/issues","members_url":"https://api.github.com/orgs/My-Solar-Garden/members{/member}","public_members_url":"https://api.github.com/orgs/My-Solar-Garden/public_members{/member}","avatar_url":"https://avatars2.githubusercontent.com/u/73499254?v=4","description":null}]'
+  recorded_at: Wed, 18 Nov 2020 03:26:54 GMT
+recorded_with: VCR 6.0.0

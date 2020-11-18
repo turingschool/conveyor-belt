@@ -11,11 +11,12 @@ class ClonesController < ApplicationController
 
   def create
     project = Project.find_by(hash_id: params[:project_hash_id])
-    clone = project.clones.new(students: params[:students], user: current_user)
-
-    if clone.save
-      ProjectBoardClonerWorker.perform_later(project, clone, params[:email])
-      redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
+    if project
+      clone = project.clones.new(students: params[:students], user: current_user)
+      if clone.save
+        ProjectBoardClonerWorker.perform_later(project, clone, params[:email])
+        redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
+      end
     else
       redirect_to root_path, alert: "We're sorry but we were unable to clone the project board. Make sure the link to your Github repo was entered correctly and try again. If you continue to experience difficulty reach out to your instructor or point of contact."
     end
@@ -26,7 +27,7 @@ class ClonesController < ApplicationController
     clone = project.clones.find(params[:id])
     ProjectBoardClonerWorker.perform_now(project, clone)
 
-    redirect_to admin_project_path(project), alert: "Recloning complete for #{clone.students}. Wait a minute and refresh the page."
+    redirect_to admin_project_path(project), alert: "Cloning complete for #{clone.students}. Wait a minute and refresh the page."
   end
 
   def destroy

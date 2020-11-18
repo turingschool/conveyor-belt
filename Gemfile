@@ -10,6 +10,7 @@ gem 'figaro'
 gem 'octokit', '~> 4.0'
 gem 'omniauth-github'
 gem 'pg', '>= 0.18', '< 2.0'
+gem 'postmark-rails', '~> 0.20.0'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.6'
 gem 'sass-rails', '~> 5.0'
@@ -19,16 +20,18 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'capybara'
-  gem 'factory_bot_rails'
   gem 'pry'
-  gem 'rspec-rails'
 end
 
 group :test do
-  gem 'webmock'
-  gem 'vcr'
+  gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'launchy'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'simplecov'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
