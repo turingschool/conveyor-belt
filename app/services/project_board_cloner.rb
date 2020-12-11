@@ -13,6 +13,7 @@ class ProjectBoardCloner
 
   def run
     begin
+      write_message("getting started!")
       turn_on_auto_paginate!
       fork_repo!
       invite_staff_member_to_repo!
@@ -23,9 +24,9 @@ class ProjectBoardCloner
       create_columns!
       add_to_dashboard_project!
       email_student!
-      write_message!
+      write_message("all done!")
     rescue => e
-      write_message!
+      write_message(e.message)
       raise e
     end
 
@@ -41,17 +42,17 @@ class ProjectBoardCloner
     :project_number, :forked_repo, :staff_client, :student_client
 
   def fork_repo!
-    @message = "Forking repo to student account."
+    write_message("Forking repo to student account.")
     @forked_repo = student_client.fork(project.repo_path)
   end
 
   def invite_staff_member_to_repo!
-    @message = "Inviting staff member to student repo."
+    write_message("Inviting staff member to student repo.")
     student_client.invite_user_to_repository(forked_repo.full_name, project.user.nickname)
   end
 
   def accept_repo_invitation!
-    @message = "Accepting staff invitations."
+    write_message("Accepting staff invitations.")
     page, per_page = 1, 100
     no_more_invitations, found_invitation = false, false
     invites = []
@@ -84,38 +85,40 @@ class ProjectBoardCloner
   end
 
   def clone_project_board!
-    @message = "Cloning project board."
+    write_message("Cloning project board.")
     @cloned_project_board ||= student_client.create_project(repo_path, project.name)
   end
 
   def enable_issues!
-    @message = "Enabling issues on student repo."
+    write_message("Enabling issues on student repo.")
     student_client.edit_repository(repo_path, has_issues: true)
   end
 
   def update_clone!
-    @message = "Saving GitHub project id in the database."
+    write_message("Saving GitHub project id in the database.")
     clone.update!(github_project_id: cloned_project_board.id, url: cloned_project_board.html_url)
   end
 
   def create_columns!
     column_templates.each.with_index(1) do |column_template, index|
-      @message = "Creating column #{index}."
+      write_message("Creating column #{index} and copy cards.")
       ColumnCloner.run!(column_template, forked_repo, clone.github_project_id, staff_client)
     end
   end
 
   def add_to_dashboard_project!
-    @message = "Adding reference to dashboard project."
+    write_message("Adding reference to dashboard project.")
     staff_client.create_project_card(project.github_column, note: cloned_project_board.html_url)
   end
 
   def email_student!
+    write_message("sending email to student")
     CloneMailer.with(email: email, clone: clone).send_notification.deliver_now
   end
 
-  def write_message!
-    clone.update(message: message)
+  def write_message(message)
+    @clone.update(message: message)
+    @clone.save!
   end
 
   def base_project
@@ -137,7 +140,9 @@ class ProjectBoardCloner
   end
 
   def turn_on_auto_paginate!
+    write_message("enabling auto_paginate for staff")
     staff_client.auto_paginate = true
+    write_message("enabling auto_paginate for students")
     student_client.auto_paginate = true
   end
 end

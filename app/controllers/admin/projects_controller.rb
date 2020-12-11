@@ -22,7 +22,7 @@ module Admin
     end
 
     def project
-      @project ||= current_user.projects.find_by(hash_id: params[:id])
+      @project ||= Project.find_by(hash_id: params[:id])
     end
   end
 end

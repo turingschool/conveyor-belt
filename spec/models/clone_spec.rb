@@ -1,5 +1,4 @@
 require 'rails_helper'
-include Rails.application.routes.url_helpers
 
 RSpec.describe Clone, type: :model do
   # let(:instructor) { create(:instructor) }

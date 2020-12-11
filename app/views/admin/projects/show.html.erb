@@ -1,23 +1,23 @@
 <h3><%= @project.name %></h3>
 <ul>
-  <li><strong>Link to send students:</strong> <%= link_to new_project_clone_path(project_id: @project.hash_id), new_project_clone_path(project_id: @project.hash_id) %></li>
+  <li><strong>Link to send students:</strong> <%= link_to new_project_clone_url(project_id: @project.hash_id), new_project_clone_url(project_id: @project.hash_id) %></li>
   <li><strong>Project Board:</strong> <%= link_to @project.board_url, @project.board_url %></li>
 </ul>
 
 <table>
   <tr>
-    <th>Students</th>
+    <th>Student(s)</th>
     <th>Repo URL</th>
     <th>Status</th>
     <th>Last Updated</th>
     <th>Actions</th>
   </tr>
-  <% @project.clones.each do |clone| %>
+  <% @project.get_clones.each do |clone| %>
     <tr>
       <td><%= clone.students %></td>
       <td><%= link_to clone.url, clone.url %></td>
       <td><%= clone.message %></td>
-      <td><%= clone.updated_at %></td>
+      <td><%= distance_of_time_in_words(Time.now, clone.updated_at) %> ago</td>
       <td>
         <%= link_to "Delete",
                     project_clone_path(clone.project, clone),

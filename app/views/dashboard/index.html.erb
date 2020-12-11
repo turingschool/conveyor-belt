@@ -5,7 +5,7 @@
     <h3>Existing Project Board Templates</h3>
     <ol>
     <% @facade.projects.each do |project| %>
-      <li><%= link_to project.name, admin_project_path(project) %></li>
+      <li><%= link_to project.name, admin_project_path(project) %>, created by <%= project.user.name %> / <%= project.user.email %></li>
     <% end %>
     </ol>
     </div>
