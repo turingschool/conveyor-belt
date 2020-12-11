@@ -1,5 +1,4 @@
 require 'rails_helper'
-include Rails.application.routes.url_helpers
 
 RSpec.describe User, type: :model do
   describe 'relationships' do

@@ -1,7 +1,8 @@
 require 'rails_helper'
-include Rails.application.routes.url_helpers
 
 RSpec.describe Project, type: :model do
+  include Rails.application.routes.url_helpers
+
   let(:instructor) { create(:instructor) }
   let(:student)    { create(:student, nickname: "ClassicRichard") }
 
