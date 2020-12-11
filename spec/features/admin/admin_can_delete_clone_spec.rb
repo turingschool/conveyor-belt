@@ -17,11 +17,20 @@ feature 'admin can interact with student repo clones' do
                    user: student,
                    url: 'http://abc/123'
     )
+    mock_login(instructor)
 
-    stub_omniauth
-    allow(ApprovedOrganizations).to receive(:all).and_return(%w(turingschool))
-    visit root_path
-    click_link "Sign in with GitHub"
+    visit admin_project_path(project)
+
+    expect(page).to have_content(clone.url)
+    within ".project-#{project.id}" do
+      click_link 'Delete'
+    end
+
+    expect(current_path).to eq(admin_project_path(project))
+    expect(page).to_not have_content(clone.url)
+    expect(page).to have_content("Clone was deleted successfully")
+  end
+
 
     visit admin_project_path(project)
 
