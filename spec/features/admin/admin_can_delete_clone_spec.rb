@@ -31,6 +31,25 @@ feature 'admin can interact with student repo clones' do
     expect(page).to have_content("Clone was deleted successfully")
   end
 
+  scenario 'admin can delete clone of a project made by another admin' do
+    instructor_1 = create(:instructor, nickname: 'iandouglas')
+    instructor_2 = create(:instructor, nickname: 'brianzanti')
+
+    project = create(:project,
+                     name: "BE3 Group Project",
+                     user: instructor_1,
+                     project_board_base_url: "https://github.com/turingschool-examples/watch-and-learn/projects/1",
+                     github_column: 9804554
+    )
+    student = create(:student)
+    clone = create(:clone,
+                   students: 'Richard H.',
+                   project: project,
+                   user: student,
+                   url: 'http://abc/123'
+    )
+
+    mock_login(instructor_2)
 
     visit admin_project_path(project)
 
