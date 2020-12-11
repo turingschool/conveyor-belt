@@ -17,7 +17,7 @@
       <td><%= clone.students %></td>
       <td><%= link_to clone.url, clone.url %></td>
       <td><%= clone.message %></td>
-      <td><%= clone.updated_at %></td>
+      <td><%= distance_of_time_in_words(Time.now, clone.updated_at) %></td>
       <td>
         <%= link_to "Delete",
                     project_clone_path(clone.project, clone),
