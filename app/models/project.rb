@@ -27,6 +27,6 @@ class Project < ApplicationRecord
   end
 
   def get_clones
-    self.clones.joins(:user).order('users.nickname asc, users.email asc, projects.created_at desc')
+    clones.joins(:user).where(project: self).order('users.nickname asc, users.email asc, projects.created_at desc')
   end
 end
