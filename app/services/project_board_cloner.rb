@@ -101,7 +101,7 @@ class ProjectBoardCloner
 
   def create_columns!
     column_templates.each.with_index(1) do |column_template, index|
-      write_message("Creating column #{index}.")
+      write_message("Creating column #{index} and copy cards.")
       ColumnCloner.run!(column_template, forked_repo, clone.github_project_id, staff_client)
     end
   end

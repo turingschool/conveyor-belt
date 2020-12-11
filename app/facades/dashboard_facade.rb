@@ -5,6 +5,9 @@ class DashboardFacade
 
   def projects
     @projects ||= user.projects
+    if user.admin?
+      @projects = Project.all.order(:project_board_base_url)
+    end
   end
 
   def project
