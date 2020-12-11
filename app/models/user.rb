@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :clones, dependent: :destroy
 
   def self.from_omniauth(auth)
-    user = User.find_bu(uid: auth.uid)
+    user = User.find_by(uid: auth.uid)
     is_admin = false
     if user.nil?
       client = Octokit::Client.new(access_token: auth.credentials.token)
