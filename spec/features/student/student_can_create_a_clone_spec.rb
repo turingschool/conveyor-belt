@@ -26,4 +26,35 @@ feature 'User creates a new clone' do
 
     expect(current_path).to eq(root_path)
   end
+
+  scenario 'admin can delete clone' do
+    instructor = create(:instructor, nickname: 'iandouglas')
+
+    project = create(:project,
+                     name: "BE3 Group Project",
+                     user: instructor,
+                     project_board_base_url: "https://github.com/turingschool-examples/watch-and-learn/projects/1",
+                     github_column: 9804554
+    )
+    student = create(:student)
+    clone = create(:clone,
+                   students: 'Richard H.',
+                   project: project,
+                   user: student,
+                   url: 'http://abc/123'
+    )
+
+    stub_omniauth
+    allow(ApprovedOrganizations).to receive(:all).and_return(%w(turingschool))
+    visit root_path
+    click_link "Sign in with GitHub"
+
+    visit admin_project_path(project)
+
+    expect(page).to have_content(clone.url)
+    click_link 'Delete'
+
+    expect(current_path).to eq(admin_project_path(project))
+    expect(page).to_not have_content(clone.url)
+  end
 end

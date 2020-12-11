@@ -36,6 +36,7 @@ class ClonesController < ApplicationController
   def destroy
     # TODO Move this to the admin namespace
     project = current_user.projects.find_by(hash_id: params[:project_id])
+    project = Project.find_by(hash_id: params[:project_id]) if project.nil? and current_user.admin?
     clone = project.clones.find(params[:id])
 
     if clone.destroy
