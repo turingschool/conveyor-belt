@@ -25,4 +25,8 @@ class Project < ApplicationRecord
 
     [url_segments[1], url_segments[2]].join("/")
   end
+
+  def get_clones
+    clones.joins(:users).order('users.nickname asc, users.email asc, projects.created_at desc')
+  end
 end
