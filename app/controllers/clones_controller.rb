@@ -30,6 +30,7 @@ class ClonesController < ApplicationController
 
   def show
     @clone = Clone.find(params[:id])
+    four_oh_four unless clone_belongs_to_current_user?(@clone)
   end
   # def update
   #   project = current_user.projects.find_by(hash_id: params[:project_id])
@@ -38,8 +39,13 @@ class ClonesController < ApplicationController
   #
   #   redirect_to admin_project_path(project), alert: "Cloning complete for #{clone.students}. Wait a minute and refresh the page."
   # end
+  private
 
   def clone_params
     params.require(:clone).permit(:url, :students)
+  end
+
+  def clone_belongs_to_current_user?(clone)
+    clone.user == current_user
   end
 end
