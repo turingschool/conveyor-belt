@@ -45,26 +45,40 @@ feature 'User creates a new clone' do
     expect(page).to have_content('we were unable to clone the project board')
   end
 
-  scenario 'when that clone exists, it does not create duplicates' do
-    project = create(:project)
-    student = create(:student)
-    clone = create(:clone, user: student, project: project)
-    students = 'Dasher, Prancer, Vixen'
-    email = 'studentemail@gmail.com'
+  describe 'when that clone already exists' do
+    before :each do
+      @clone = create(:clone)
+      mock_login(@clone.user)
 
-    mock_login(student)
-
-    visit new_project_clone_path(project)
-
-    fill_in :students, with: students
-    fill_in :email, with: email
-
-    click_button 'Submit'
-
-    within '#new_clone' do
-      expect(find('#students').value).to eq(students)
+      @students = 'Dasher, Prancer, Vixen'
+      @email = 'studentemail@gmail.com'
     end
 
-    expect(page).to have_content("We're sorry, it looks like you already have a clone created")
+    it 'does not create duplicates' do
+      visit new_project_clone_path(@clone.project)
+
+      fill_in :students, with: @students
+      fill_in :email, with: @email
+
+      click_button 'Submit'
+
+      within '#new_clone' do
+        expect(find('#students').value).to eq(@students)
+      end
+
+      expect(page).to have_content("We're sorry, it looks like you already have a clone created.")
+    end
+
+    it 'links to the show page for the existing clone' do
+      visit new_project_clone_path(@clone.project)
+
+      fill_in :students, with: @students
+      fill_in :email, with: @email
+
+      click_button 'Submit'
+
+      expect(page).to have_content('Click here to view your clone.')
+      expect(page).to have_link('Click here', href: clone_path(@clone))
+    end
   end
 end

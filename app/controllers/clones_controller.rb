@@ -18,7 +18,9 @@ class ClonesController < ApplicationController
         ProjectBoardClonerWorker.perform_later(@project, @clone, params[:email])
         redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
       else
-        flash[:alert] = "We're sorry, it looks like you already have a clone created"
+        existing_clone = Clone.find_by(user: current_user, project: @project)
+        click_here_link = helpers.link_to 'Click here', clone_path(existing_clone)
+        flash[:alert] = "We're sorry, it looks like you already have a clone created. #{click_here_link} to view your clone."
         render :new
       end
     else
