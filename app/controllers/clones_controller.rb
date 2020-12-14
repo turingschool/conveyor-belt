@@ -25,28 +25,13 @@ class ClonesController < ApplicationController
     end
   end
 
-  def update
-    project = current_user.projects.find_by(hash_id: params[:project_id])
-    clone = project.clones.find(params[:id])
-    ProjectBoardClonerWorker.perform_now(project, clone)
-
-    redirect_to admin_project_path(project), alert: "Cloning complete for #{clone.students}. Wait a minute and refresh the page."
-  end
-
-  def destroy
-    # TODO Move this to the admin namespace
-    project = current_user.projects.find_by(hash_id: params[:project_id])
-    project = Project.find_by(hash_id: params[:project_id]) if project.nil? and current_user.admin?
-    clone = project.clones.find(params[:id])
-
-    if clone.destroy
-      @message = "Successfully deleted clone."
-    else
-      @message = "Unable to delete clone. Please try again."
-    end
-
-    redirect_to admin_project_path(project), alert: @message
-  end
+  # def update
+  #   project = current_user.projects.find_by(hash_id: params[:project_id])
+  #   clone = project.clones.find(params[:id])
+  #   ProjectBoardClonerWorker.perform_now(project, clone)
+  #
+  #   redirect_to admin_project_path(project), alert: "Cloning complete for #{clone.students}. Wait a minute and refresh the page."
+  # end
 
   def clone_params
     params.require(:clone).permit(:url, :students)
