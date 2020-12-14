@@ -28,6 +28,7 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'launchy'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
