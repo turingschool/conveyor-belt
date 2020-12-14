@@ -36,6 +36,10 @@ def stub_omniauth
   })
 end
 
+def mock_login(user)
+  allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+end
+
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
