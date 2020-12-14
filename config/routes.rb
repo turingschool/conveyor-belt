@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resources :clones, only: [:new, :create, :update]
   end
 
+  resources :clones, only: :show
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 end

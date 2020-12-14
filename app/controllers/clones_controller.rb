@@ -28,6 +28,9 @@ class ClonesController < ApplicationController
     end
   end
 
+  def show
+    @clone = Clone.find(params[:id])
+  end
   # def update
   #   project = current_user.projects.find_by(hash_id: params[:project_id])
   #   clone = project.clones.find(params[:id])
