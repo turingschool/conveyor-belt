@@ -3,6 +3,8 @@ class Clone < ApplicationRecord
   belongs_to :user
 
   validates :students,  presence: true
+  validates :user_id, uniqueness: { scope: :project_id }
+  
   # validates :url,       presence: true
 
   # before_validation :set_owner_and_repo
