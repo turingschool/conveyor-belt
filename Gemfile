@@ -23,12 +23,12 @@ gem 'uglifier', '>= 1.3.0'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :test do
   gem 'capybara'
-  gem 'factory_bot_rails'
-  gem 'faker'
   gem 'launchy'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
