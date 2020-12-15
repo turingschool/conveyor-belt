@@ -24,7 +24,11 @@ feature 'User creates a new clone' do
       expect(page).to have_content('Thanks for your submission!')
     end
 
+    scenario 'their email is prepopulated in the form' do
+      visit new_project_clone_path(project_id: @project.hash_id)
 
+      expect(find('#email').value).to eq(@student.email)
+    end
 
     scenario 'student cannot create a clone when that project has been deleted by an admin' do
       visit new_project_clone_path(project_id: @project.hash_id)
@@ -41,7 +45,7 @@ feature 'User creates a new clone' do
       expect(page).to have_content('we were unable to clone the project board')
     end
   end
-
+  
   describe 'when that clone already exists' do
     before :each do
       @clone = create(:clone)

@@ -11,7 +11,7 @@
       </p>
       <p class="mt2">
         <strong>We'll send you an email when everything is finished. Where would you like us to send to?</strong>
-        <%= text_field_tag :email, nil, class: "block col-12 field"  %>
+        <%= text_field_tag :email, current_user.email, class: "block col-12 field"  %>
       </p>
       <%= f.submit "Submit", class: "mt2 btn btn-primary mb1"  %>
     <% end %>
