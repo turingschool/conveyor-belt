@@ -19,15 +19,26 @@ feature 'User creates a new clone' do
       expect {
         click_on 'Submit'
       }.to change { Clone.count }.by(1)
-
-      expect(current_path).to eq(root_path)
-      expect(page).to have_content('Thanks for your submission!')
     end
 
     scenario 'their email is prepopulated in the form' do
       visit new_project_clone_path(project_id: @project.hash_id)
 
       expect(find('#email').value).to eq(@student.email)
+    end
+
+    scenario 'it redirects to the clone show page' do
+      visit new_project_clone_path(project_id: @project.hash_id)
+
+      fill_in :students, with: 'Flower, Thumper, Bambi'
+      fill_in :email, with: 'bambi@example.com'
+
+      click_on 'Submit'
+
+      clone = Clone.last
+
+      expect(current_path).to eq(clone_path(clone))
+      expect(page).to have_content('Thanks for your submission!')
     end
 
     scenario 'student cannot create a clone when that project has been deleted by an admin' do

@@ -20,7 +20,7 @@ class ClonesController < ApplicationController
       if @clone.save
         @clone.update(message: 'sending to sidekiq')
         ProjectBoardClonerWorker.perform_later(@project, @clone, params[:email])
-        redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
+        redirect_to clone_path(@clone), alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
       else
         redirect_to root_path, alert: "We're sorry but we were unable to clone the project board."
       end
