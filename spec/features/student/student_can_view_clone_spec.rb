@@ -23,4 +23,15 @@ feature 'User visits clone show page' do
 
     expect { visit clone_path(clone) }.to raise_error(ActionController::RoutingError)
   end
+
+  it 'does not show repo link if repo has not been successfully created' do
+    clone = create(:clone, url: nil)
+    student = clone.user
+
+    mock_login(student)
+
+    visit clone_path(clone)
+
+    expect(page).to_not have_content("View your repo on GitHub")
+  end
 end
