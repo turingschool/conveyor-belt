@@ -45,7 +45,7 @@ feature 'User creates a new clone' do
       expect(page).to have_content('we were unable to clone the project board')
     end
   end
-  
+
   describe 'when that clone already exists' do
     before :each do
       @clone = create(:clone)
@@ -55,31 +55,22 @@ feature 'User creates a new clone' do
       @email = 'studentemail@gmail.com'
     end
 
-    it 'does not create duplicates' do
+    scenario 'it redirects to that clone show page' do
       visit new_project_clone_path(@clone.project)
 
-      fill_in :students, with: @students
-      fill_in :email, with: @email
-
-      click_button 'Submit'
-
-      within '#new_clone' do
-        expect(find('#students').value).to eq(@students)
-      end
-
-      expect(page).to have_content("We're sorry, it looks like you already have a clone created.")
+      expect(current_path).to eq(clone_path(@clone))
     end
 
-    it 'links to the show page for the existing clone' do
-      visit new_project_clone_path(@clone.project)
-
-      fill_in :students, with: @students
-      fill_in :email, with: @email
-
-      click_button 'Submit'
-
-      expect(page).to have_content('Click here to view your clone.')
-      expect(page).to have_link('Click here', href: clone_path(@clone))
-    end
+    # scenario 'links to the show page for the existing clone' do
+    #   visit new_project_clone_path(@clone.project)
+    #
+    #   fill_in :students, with: @students
+    #   fill_in :email, with: @email
+    #
+    #   click_button 'Submit'
+    #
+    #   expect(page).to have_content('Click here to view your clone.')
+    #   expect(page).to have_link('Click here', href: clone_path(@clone))
+    # end
   end
 end

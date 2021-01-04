@@ -4,9 +4,13 @@ class ClonesController < ApplicationController
   def new
     @project = Project.find_by(hash_id: params[:project_id])
     four_oh_four unless @project
-
-    @clone = @project.clones.new
-    session[:previous_page] = new_project_clone_path(@project)
+    existing_clone = Clone.find_by(user: current_user, project: @project)
+    if existing_clone
+      redirect_to clone_path(existing_clone)
+    else
+      @clone = @project.clones.new
+      session[:previous_page] = new_project_clone_path(@project)
+    end
   end
 
   def create
@@ -18,10 +22,7 @@ class ClonesController < ApplicationController
         ProjectBoardClonerWorker.perform_later(@project, @clone, params[:email])
         redirect_to root_path, alert: "Thanks for your submission! We will send an email to #{params[:email]} when we finish getting everything setup. Follow the instructions in that message. Thanks!"
       else
-        existing_clone = Clone.find_by(user: current_user, project: @project)
-        click_here_link = helpers.link_to 'Click here', clone_path(existing_clone)
-        flash[:alert] = "We're sorry, it looks like you already have a clone created. #{click_here_link} to view your clone."
-        render :new
+        redirect_to root_path, alert: "We're sorry but we were unable to clone the project board."
       end
     else
       redirect_to root_path, alert: "We're sorry but we were unable to clone the project board."
