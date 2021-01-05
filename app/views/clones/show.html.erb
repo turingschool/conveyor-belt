@@ -1,4 +1,4 @@
 <h2>Clone of Project <%= @clone.project.name %></h2>
-<%= link_to 'View your repo on GitHub', @clone.url if @clone.url %>
+<%= link_to 'View your repo on GitHub', @clone.url if @clone.valid_url? %>
 <p>Students working on this project: <%= @clone.students %></p>
 <p>Status: <%= @clone.message %></p>
