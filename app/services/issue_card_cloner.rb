@@ -9,9 +9,7 @@ class IssueCardCloner
 
   def run
     create_issue!
-    sleep(1)
     create_card!
-    sleep(1)
   end
 
   def self.run(repo, template_card, cloned_column, client)

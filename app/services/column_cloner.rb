@@ -31,7 +31,6 @@ class ColumnCloner
         IssueCardCloner.run(target_repo, template_card, cloned_column, client)
       else # it's a note
         client.create_project_card(cloned_column.id, note: template_card.note)
-        sleep(1)
       end
     end
   end
@@ -41,3 +40,4 @@ class ColumnCloner
     @template_cards ||= client.column_cards(column_template[:id]).reverse
   end
 end
+
