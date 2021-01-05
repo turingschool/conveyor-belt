@@ -33,4 +33,23 @@ RSpec.describe Clone, type: :model do
       end
     end
   end
+
+  describe 'instance methods' do
+    describe '#valid_url?' do
+      it 'treats a github repo url as valid' do
+        clone = create(:clone, url: 'https://github.com/agallant121/adopt_dont_shop_2005')
+        expect(clone.valid_url?).to be(true)
+      end
+
+      it 'does not treat nil as valid' do
+        clone = create(:clone, url: nil)
+        expect(clone.valid_url?).to be(false)
+      end
+
+      it 'does not treat an empty string as valid' do
+        clone = create(:clone, url: "")
+        expect(clone.valid_url?).to be(false)
+      end
+    end
+  end
 end

@@ -9,6 +9,10 @@ class Clone < ApplicationRecord
 
   # before_validation :set_owner_and_repo
 
+  def valid_url?
+    url.present? && url.length > 0
+  end
+
   private
 
   # def set_owner_and_repo
