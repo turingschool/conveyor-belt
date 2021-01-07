@@ -6,7 +6,7 @@ RSpec.describe IssueCardCloner do
       # Mock all dependencies
       labels = [{name: 'Big Problem'}, {name: 'Lotta Work'}]
       base_issue = double(:base_issue, title: 'Generic Issue Title', labels: labels, body: 'Super important task')
-      cloned_issue = double(id: 1)
+      cloned_issue = double(:cloned_issue, id: 1)
       client = double(:client, issue: base_issue, create_issue: cloned_issue, create_project_card: nil)
       repo = double(:repo, full_name: 'SomeGithubUser/some-repo')
       template_card = double(:template_card, content_url: "https://api.github.com/repos/example-org/example-repo/issues/1")
