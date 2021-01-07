@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :project do
-    name { "Conveyor Belt" }
-    user { staff }
-    hash_id { "abc123" }
-    project_board_base_url { "https://github.com/turingschool-examples/watch-and-learn/projects/1" }
+    name { Faker::Company.catch_phrase }
+    user { create(:staff) }
+    hash_id { Faker::Crypto.md5 }
+    project_board_base_url { Faker::Internet.url }
   end
 end
