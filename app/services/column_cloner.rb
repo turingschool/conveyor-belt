@@ -40,4 +40,3 @@ class ColumnCloner
     @template_cards ||= client.column_cards(column_template[:id]).reverse
   end
 end
-
