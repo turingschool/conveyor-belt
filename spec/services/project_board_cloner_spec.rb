@@ -60,7 +60,7 @@ describe ProjectBoardCloner do
       expect(staff_client).to receive(:user_repository_invitations).and_return([invitation])
       expect(staff_client).to receive(:projects).with("#{org_name}/#{repo_name}").and_return([base_project_on_github])
       expect(staff_client).to receive(:project_columns).with(9999).and_return([column])
-      expect(ColumnCloner).to receive(:run!).with(column, forked_repo, "1", staff_client)
+      expect(ColumnCloner).to receive(:run!).with(column, forked_repo, "1", student_client)
       expect(staff_client).to receive(:create_project_card)
 
       subject.run
