@@ -80,7 +80,7 @@ GEM
     hashie (4.1.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
-    json (2.3.1)
+    json (2.5.1)
     jwt (2.2.2)
     launchy (2.5.0)
       addressable (~> 2.7)
@@ -122,7 +122,7 @@ GEM
       oauth2 (~> 1.4)
       omniauth (~> 1.9)
     pg (1.2.3)
-    postmark (1.21.2)
+    postmark (1.21.3)
       json
     postmark-rails (0.20.0)
       actionmailer (>= 3.0.0)
